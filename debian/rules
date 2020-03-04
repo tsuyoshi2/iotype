@@ -1,0 +1,53 @@
+#! /usr/bin/make -f
+INSTALL = install -o root -g root
+INSTALL_DIR = $(INSTALL) -m 0755 -d
+INSTALL_FILE = $(INSTALL) -m 0644
+INSTALL_EXE = $(INSTALL) -m 0755 -s
+TMP = debian/tmp
+DOC = $(TMP)/usr/share/doc/$(PACKAGE)
+MAN = $(TMP)/usr/share/man/man1
+BIN = $(TMP)/usr/bin
+SML_LIB = $(TMP)/usr/lib/mlton/sml/iotype
+preprocessor/iotype:
+	mlton preprocessor/iotype.mlb
+build: build-arch build-indep
+build-arch: preprocessor/iotype
+build-indep:
+binary: binary-arch binary-indep
+binary-arch: PACKAGE = iotype
+binary-arch: build-arch
+	rm -rf $(TMP) debian/substvars debian/files
+	$(INSTALL_DIR) $(BIN)/
+	$(INSTALL_EXE) preprocessor/iotype $(BIN)/
+	$(INSTALL_DIR) $(MAN)/
+	$(INSTALL_FILE) preprocessor/iotype.1 $(MAN)/
+	gzip -9 $(MAN)/iotype.1
+	$(INSTALL_DIR) $(DOC)/
+	$(INSTALL_FILE) README $(DOC)/
+	$(INSTALL_FILE) debian/copyright $(DOC)/
+	$(INSTALL_FILE) debian/changelog $(DOC)/changelog.Debian
+	gzip -9 $(DOC)/changelog.Debian
+	$(INSTALL_FILE) CHANGES $(DOC)/changelog
+	gzip -9 $(DOC)/changelog
+	$(INSTALL_DIR) $(TMP)/DEBIAN
+	dpkg-shlibdeps $(BIN)/*
+	dpkg-gencontrol -p$(PACKAGE)
+	dpkg-deb -b $(TMP) ..
+binary-indep: PACKAGE = libiotype-mlton-dev
+binary-indep:
+	rm -rf $(TMP) debian/substvars debian/files
+	$(INSTALL_DIR) $(SML_LIB)/
+	$(INSTALL_FILE) library/* $(SML_LIB)/
+	$(INSTALL_DIR) $(DOC)/
+	$(INSTALL_FILE) README $(DOC)/
+	$(INSTALL_FILE) debian/README.Debian $(DOC)/
+	$(INSTALL_FILE) debian/copyright $(DOC)/
+	$(INSTALL_FILE) debian/changelog $(DOC)/changelog.Debian
+	gzip -9 $(DOC)/changelog.Debian
+	$(INSTALL_FILE) CHANGES $(DOC)/changelog
+	gzip -9 $(DOC)/changelog
+	$(INSTALL_DIR) $(TMP)/DEBIAN
+	dpkg-gencontrol -p$(PACKAGE)
+	dpkg-deb -b $(TMP) ..
+clean:
+	rm -rf preprocessor/iotype debian/substvars debian/files $(TMP)

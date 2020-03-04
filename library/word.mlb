@@ -1,0 +1,6 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	ioword.mlb
+in
+	word.sml
+end

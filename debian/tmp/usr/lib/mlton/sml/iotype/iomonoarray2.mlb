@@ -1,0 +1,9 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	element.mlb
+	integer.mlb
+	array2.mlb
+	option.mlb
+in
+	iomonoarray2.sml
+end

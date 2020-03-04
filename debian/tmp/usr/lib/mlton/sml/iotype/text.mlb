@@ -1,0 +1,11 @@
+local
+	char.mlb
+	string.mlb
+	substring.mlb
+	monovector.mlb
+	monoarray.mlb
+	monovectorslice.mlb
+	monoarrayslice.mlb
+in
+	text.sml
+end

@@ -1,0 +1,11 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	element.mlb
+	bool.mlb
+	char.mlb
+	integer.mlb
+	word.mlb
+	real.mlb
+in
+	elements.sml
+end

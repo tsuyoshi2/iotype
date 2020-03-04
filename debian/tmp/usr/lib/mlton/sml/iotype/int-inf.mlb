@@ -1,0 +1,6 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	word.mlb
+in
+	int-inf.sml
+end

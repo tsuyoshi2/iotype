@@ -1,0 +1,68 @@
+val () = OS.Process.exit (
+	let
+		iotype politician = {
+			name: string
+			, worthMoreThanABucketOfWarmPiss: bool
+		}
+		iotype politicians = politician list
+		val name = OS.FileSys.tmpName ()
+	in
+		let
+			val outstream = BinIO.openOut name
+		in
+			writePoliticians (
+				outstream
+				, [
+					{
+						name = "George W. Bush"
+						, worthMoreThanABucketOfWarmPiss = false
+					}, {
+						name = "Barack Obama"
+						, worthMoreThanABucketOfWarmPiss = false
+					}, {
+						name = "Charles Schumer"
+						, worthMoreThanABucketOfWarmPiss = false
+					}, {
+						name = "Eric Schneiderman"
+						, worthMoreThanABucketOfWarmPiss = true
+					}, {
+						name = "Jeff Merkley"
+						, worthMoreThanABucketOfWarmPiss = true
+					}, {
+						name = "Sherrod Brown"
+						, worthMoreThanABucketOfWarmPiss = true
+					}
+				]
+			); BinIO.closeOut outstream
+		end
+		; let
+			val instream = BinIO.openIn name
+		in
+			(case readPoliticians instream of
+				SOME [
+					{
+						name = "George W. Bush"
+						, worthMoreThanABucketOfWarmPiss = false
+					}, {
+						name = "Barack Obama"
+						, worthMoreThanABucketOfWarmPiss = false
+					}, {
+						name = "Charles Schumer"
+						, worthMoreThanABucketOfWarmPiss = false
+					}, {
+						name = "Eric Schneiderman"
+						, worthMoreThanABucketOfWarmPiss = true
+					}, {
+						name = "Jeff Merkley"
+						, worthMoreThanABucketOfWarmPiss = true
+					}, {
+						name = "Sherrod Brown"
+						, worthMoreThanABucketOfWarmPiss = true
+					}
+				] => OS.Process.success
+				| _ => OS.Process.failure
+			) before BinIO.closeIn instream
+		end
+		before OS.FileSys.remove name
+	end
+)

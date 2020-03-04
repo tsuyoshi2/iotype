@@ -1,0 +1,33 @@
+structure Foo :> sig
+	iotype 'a t
+	val hide: 'a -> 'a t
+	val reveal: 'a t -> 'a
+end = struct
+	iotype 'a t = {
+		foo: string
+		, bar: 'a
+	}
+	fun hide x = {foo = "foo", bar = x}
+	fun reveal {foo = _, bar} = bar
+end
+val () = OS.Process.exit (
+	let
+		val name = OS.FileSys.tmpName ()
+	in
+		let
+			val outstream = BinIO.openOut name
+		in
+			Foo.writeT writeInt (outstream, Foo.hide 1234)
+			; BinIO.closeOut outstream
+		end
+		; let
+			val instream = BinIO.openIn name
+		in
+			(case Option.map Foo.reveal (Foo.readT readInt instream) of
+				SOME 1234 => OS.Process.success
+				| _ => OS.Process.failure
+			) before BinIO.closeIn instream
+		end
+		before OS.FileSys.remove name
+	end
+)

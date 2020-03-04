@@ -1,0 +1,7 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	ast/sources.mlb
+	control/sources.mlb
+in
+	write.sml
+end

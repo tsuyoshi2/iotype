@@ -1,0 +1,99 @@
+IOtype Version 1.1
+A Standard ML preprocessor that generates binary serialization
+functions from type definitions.
+
+Syntax
+
+It extends SML to add three new keywords: iotype, ioeqtype, and
+iodatatype, which correspond to the SML keywords type, eqtype,
+and datatype. By adding "io", you instruct the preprocessor to emit
+the type definition (without the "io"), as well as specifications and
+functions for reading and writing that type.
+
+Given a definition such as:
+
+	iotype foo = ...
+
+it will emit in a signature:
+
+	type foo = ...
+	val readFoo: BinIO.instream -> foo option
+	val writeFoo: BinIO.outstream * foo -> unit
+
+and in a structure:
+
+	type foo = ...
+	fun readFoo p = ...
+	fun writeFoo (p, x) = ...
+
+With type parameters, like this:
+
+	iotype ('a, 'b) foo = ...
+
+it will emit in a signature:
+
+	type ('a, 'b) foo = ...
+	val readFoo: (BinIO.instream -> 'a option) * (BinIO.instream -> 'b option)
+		-> BinIO.instream -> ('a, 'b) foo option
+	val writeFoo: (BinIO.outstream * 'a -> unit) * (BinIO.outstream * 'b -> unit)
+		-> BinIO.outstream * foo -> unit
+
+and emit in a structure:
+
+	type ('a, 'b) foo = ...
+	fun readFoo (read'a, read'b) p = ...
+	fun writeFoo (write'a, write'b) (p, x) = ...
+
+The syntax of the iotype, ioeqtype, and iodatatype statements is identical
+to the type, eqtype, and datatype statements with one exception: An
+iodatatype statement may not be a replication. For example, this form
+is not allowed:
+
+	iodatatype foo = Bar.goo
+
+When a type constructor is used inside a type, corresponding
+read and write functions for that type constructor must be
+available. It is sufficient to make the definition available by using
+iotype/ioeqtype/iodatatype, but for the Basis Library types (including
+fundamental types like int, string, list, etc.) a library is provided,
+which augments the Basis Library with read and write functions.
+
+Arrow types (i.e. functions) and exceptions are not supported.
+Sharing is not preserved. Recursive data will cause an infinite loop.
+The library does not contain support for types which are inherently
+unserializable such as I/O streams, file descriptors, C pointers, etc.
+
+Invocation
+
+	iotype {[{{-o|--output} <filename>|{-i|--use-input-name}}] <filename> ...} ...
+
+The preprocessor takes a number of input files. Preceding the input files
+can be -o, for specifying an output file, or -i, for specifying that the output
+file name should be the base of the input file name, with the extension "sml"
+appended (which is the default). In this case, if the input file name already
+has an "sml" extension, another extension is added, so that the output file name
+will end in ".sml.sml", to prevent overwriting the input file.
+
+I recommend using the extension "ioml" for source files that are to be processed
+with iotype.
+
+MLton
+
+IOtype has been developed with MLton, and in fact the parser is derived from the
+one in MLton. ML Basis files have been provided for both the preprocessor
+(preprocessor/iotype.mlb) and the library (library/iotype.mlb).
+
+Other compilers and interpreters
+
+IOtype should work with any other conforming Standard ML implementation
+without any changes, but this has not yet been attempted. Reports on
+compatibility, and build patches or instructions for other compilers
+are welcome.
+
+License
+
+Please see the LICENSE file for details about what you are allowed to
+do with this software.
+
+Christopher Cramer
+tsuyoshi@yumegakanau.org

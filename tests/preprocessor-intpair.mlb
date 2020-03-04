@@ -1,0 +1,6 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	../library/iotype.mlb
+in
+	preprocessor-intpair.sml
+end

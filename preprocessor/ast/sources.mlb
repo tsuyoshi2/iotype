@@ -1,0 +1,53 @@
+(* Copyright (C) 1999-2007 Henry Cejtin, Matthew Fluet, Suresh
+ *    Jagannathan, and Stephen Weeks.
+ * Copyright (C) 1997-2000 NEC Research Institute.
+ *
+ * MLton is released under a BSD-style license.
+ * See the file MLton-LICENSE for details.
+ *)
+
+local
+   ../lib/sources.mlb
+   ../control/sources.mlb
+
+   admits-equality.sig
+   admits-equality.fun
+   wrapped.sig
+   ast-const.sig
+   ast-const.fun
+   symbol.sig
+   symbol.fun
+   ast-id.sig
+   ast-id.fun
+   field.sig
+   field.fun
+   longid.sig
+   longid.fun
+   record.sig
+   record.fun
+   tyvar.sig
+   tyvar.fun
+   ast-atoms.sig
+   ast-atoms.fun
+   ast-core.sig
+   ast-core.fun
+   ast-modules.sig
+   ast-modules.fun
+   ast-programs.sig
+   ast-programs.fun
+   ast.sig
+   ast.fun
+in
+   signature ADMITS_EQUALITY
+   signature AST
+   signature FIELD
+   signature RECORD
+   signature TYVAR
+
+   functor AdmitsEquality
+   functor Ast
+   functor Field
+   functor Record
+   functor Symbol
+   functor Tyvar
+end

@@ -1,0 +1,33 @@
+val $ : unit = OS.Process.exit (
+	let
+		iotype foo = {
+			bar : string
+			, baz : int
+		}
+		val name = OS.FileSys.tmpName ()
+	in
+		let
+			val outstream = BinIO.openOut name
+		in
+			writeFoo (
+				outstream
+				, {
+					bar = "five hundred sixty three"
+					, baz = 563
+				}
+			); BinIO.closeOut outstream
+		end
+		; let
+			val instream = BinIO.openIn name
+		in
+			(case readFoo instream of
+				SOME {
+					bar = "five hundred sixty three"
+					, baz = 563
+				} => OS.Process.success
+				| _ => OS.Process.failure
+			) before BinIO.closeIn instream
+		end
+		before OS.FileSys.remove name
+	end
+)

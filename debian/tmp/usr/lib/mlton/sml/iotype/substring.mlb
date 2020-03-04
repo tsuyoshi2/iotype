@@ -1,0 +1,7 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	integer.mlb
+	string.mlb
+in
+	substring.sml
+end

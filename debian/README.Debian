@@ -1,0 +1,2 @@
+The library is available under MLton's SML library path like so:
+	$(SML_LIB)/iotype/iotype.mlb

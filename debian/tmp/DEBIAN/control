@@ -1,0 +1,18 @@
+Package: libiotype-mlton-dev
+Source: iotype
+Version: 1.2-1
+Architecture: all
+Maintainer: Christopher Cramer <tsuyoshi@yumegakanau.org>
+Installed-Size: 344
+Recommends: mlton
+Section: libdevel
+Priority: extra
+Description: A library for use with MLton that provides support for Basis Library types
+ IOType is a preprocessor that extends Standard ML to provide support
+ for automatically generating serialization functions (functions to read
+ and write to binary streams) for any type you define.
+ .
+ This is the library, which provides serialization functions for Basis
+ Library types (such as int, char, string, vector, etc.). The library is
+ installed into the MLton library directory and a basis file is available
+ at $(SML_LIB)/iotype/iotype.mlb.

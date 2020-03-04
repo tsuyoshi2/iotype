@@ -1,0 +1,26 @@
+2011-10-01
+	Documentation updates
+	Preprocessor now generates fewer redundant source positions
+	Fixed bug where operator identifiers used in patterns could be outputted incorrectly
+	Fixed bug where operator identifiers used as record fields would be outputted incorrectly
+2011-09-24
+	Generated code now has source locations corresponding to the output file rather than
+		the input file
+2011-09-08
+	Fixed bug where signatures of polymorphic readers used BinIO.outstream rather than
+		BinIO.instream
+	Fixed bug where signatures of polymorphic readers had their type variable helpers
+		returning a non-option rather than an option
+	Added test catching the previous two bugs
+	Changed basis datatype readers to return NONE on garbage
+	Fixed bug where preprocessor-generated datatype readers were not wrapping results with SOME
+	Fixed bug where preprocessor-generated datatype readers were using readInt instead of
+		Int16.readInt, like the generated writers
+	Added test for previous two bugs
+	Changed preprocessor-generated datatype readers to return NONE on garbage
+2011-09-07
+	Fixed bug where the unit type was outputted as "()" instead of "unit" in signatures
+	Fixed bug where record types could not be inferred under certain circumstances
+	Added test catching the previous two bugs
+2011-08-23
+	Initial release

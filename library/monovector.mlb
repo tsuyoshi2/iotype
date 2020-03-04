@@ -1,0 +1,8 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	iomonovector.mlb
+	string.mlb
+	elements.mlb
+in
+	monovector.sml
+end

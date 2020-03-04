@@ -1,0 +1,26 @@
+structure Foo :> sig
+	iotype t = unit * unit
+end = struct
+	iotype t = unit * unit
+end
+val () = OS.Process.exit (
+	let
+		val name = OS.FileSys.tmpName ()
+	in
+		let
+			val outstream = BinIO.openOut name
+		in
+			Foo.writeT (outstream, ((), ()))
+			; BinIO.closeOut outstream
+		end
+		; let
+			val instream = BinIO.openIn name
+		in
+			(case Foo.readT instream of
+				SOME ((), ()) => OS.Process.success
+				| _ => OS.Process.failure
+			) before BinIO.closeIn instream
+		end
+		before OS.FileSys.remove name
+	end
+)

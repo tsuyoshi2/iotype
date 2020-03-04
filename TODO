@@ -1,0 +1,33 @@
+preprocessor:
+	separate input and output ast types
+	simplify ast
+	reformat code from MLton to match our own style convention
+	various successor proposals
+		http://successor-ml.org/index.php?title=Escapes_in_strings
+		http://successor-ml.org/index.php?title=Extended_syntax_for_literals
+		http://successor-ml.org/index.php?title=Match_guards
+		http://successor-ml.org/index.php?title=Record_labels_as_fields
+		http://successor-ml.org/index.php?title=Disjunctive_patterns
+library:
+	BinIO
+	IEEEReal
+	INetSock
+	IO
+	NetHostDB
+	NetProtDB
+	NetServDB
+	OS
+	OS.FileSys
+	Posix.Error
+	Posix.FileSys
+	Posix.ProcEnv
+	Posix.Signal
+	Posix.SysDB
+	Socket
+	StringCvt
+	Timer
+	Unix
+	UnixSock
+	Windows
+documentation:
+	explain polymorphic paradigm

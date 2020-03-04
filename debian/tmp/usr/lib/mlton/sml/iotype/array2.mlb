@@ -1,0 +1,8 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	integer.mlb
+	word.mlb
+	option.mlb
+in
+	array2.sml
+end

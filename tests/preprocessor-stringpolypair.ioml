@@ -1,0 +1,25 @@
+val () = OS.Process.exit (
+	let
+		iotype 'a neighborhood = string * 'a
+		iotype borough = string
+		val name = OS.FileSys.tmpName ()
+	in
+		let
+			val outstream = BinIO.openOut name
+		in
+			writeNeighborhood writeBorough (
+				outstream
+				, ("Hamilton Heights", "Manhattan")
+			); BinIO.closeOut outstream
+		end
+		; let
+			val instream = BinIO.openIn name
+		in
+			(case readNeighborhood readBorough instream of
+				SOME ("Hamilton Heights", "Manhattan") => OS.Process.success
+				| _ => OS.Process.failure
+			) before BinIO.closeIn instream
+		end
+		before OS.FileSys.remove name
+	end
+)

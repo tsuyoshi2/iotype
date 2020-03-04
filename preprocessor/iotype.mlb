@@ -1,0 +1,11 @@
+local
+	$(SML_LIB)/basis/basis.mlb
+	$(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
+	ast/sources.mlb
+	front-end/sources.mlb
+	control/sources.mlb
+	write.mlb
+	transform.mlb
+in
+	iotype.sml
+end

@@ -1,0 +1,27 @@
+(* Copyright 2010 Christopher Cramer
+ * Copyright (C) 2009 Matthew Fluet.
+ * Copyright (C) 1999-2006 Henry Cejtin, Matthew Fluet, Suresh
+ *    Jagannathan, and Stephen Weeks.
+ * Copyright (C) 1997-2000 NEC Research Institute.
+ *
+ * MLton is released under a BSD-style license.
+ * See the file MLton-LICENSE for details.
+ *)
+
+local
+   ../lib/sources.mlb
+   $(SML_LIB)/mlyacc-lib/mlyacc-lib.mlb
+   ../ast/sources.mlb
+   ../control/sources.mlb
+
+   ann "warnUnused false"
+   in
+      ml.grm.sig
+      ml.grm.sml 
+      ml.lex.sml
+   end
+   front-end.sig
+   front-end.fun
+in
+   functor FrontEnd
+end
